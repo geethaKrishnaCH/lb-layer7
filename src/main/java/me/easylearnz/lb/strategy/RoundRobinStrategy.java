@@ -8,7 +8,8 @@ public class RoundRobinStrategy implements LBStrategy {
 
     @Override
     public String selectServer(List<String> servers) {
-        if (servers.isEmpty()) return null;
+        if (servers.isEmpty())
+            return null;
         int index = currentIndex.getAndUpdate(i -> (i + 1) % servers.size());
         return servers.get(index);
     }

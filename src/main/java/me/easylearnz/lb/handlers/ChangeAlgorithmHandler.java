@@ -1,12 +1,13 @@
 package me.easylearnz.lb.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import me.easylearnz.lb.LoadBalancer;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+import me.easylearnz.lb.LoadBalancer;
 
 // HTTP Handler to switch algorithm
 public class ChangeAlgorithmHandler implements HttpHandler {
@@ -27,7 +28,7 @@ public class ChangeAlgorithmHandler implements HttpHandler {
                 os.write(response.getBytes());
             }
         } else {
-            exchange.sendResponseHeaders(405, -1);  // Method Not Allowed
+            exchange.sendResponseHeaders(405, -1); // Method Not Allowed
         }
     }
 }

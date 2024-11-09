@@ -1,14 +1,15 @@
 package me.easylearnz.lb;
 
-import com.sun.net.httpserver.HttpServer;
-import me.easylearnz.lb.handlers.AddServerHandler;
-import me.easylearnz.lb.handlers.ChangeAlgorithmHandler;
-import me.easylearnz.lb.handlers.RequestHandler;
-
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import com.sun.net.httpserver.HttpServer;
+
+import me.easylearnz.lb.handlers.AddServerHandler;
+import me.easylearnz.lb.handlers.ChangeAlgorithmHandler;
+import me.easylearnz.lb.handlers.RequestHandler;
 
 public class LoadBalancerServer {
     private final LoadBalancer loadBalancer;

@@ -1,13 +1,13 @@
 package me.easylearnz.lb;
 
-import me.easylearnz.lb.strategy.LBStrategy;
-import me.easylearnz.lb.strategy.LBStrategyFactory;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import me.easylearnz.lb.strategy.LBStrategy;
+import me.easylearnz.lb.strategy.LBStrategyFactory;
 
 public class LoadBalancer {
     private List<String> servers = new CopyOnWriteArrayList<>();

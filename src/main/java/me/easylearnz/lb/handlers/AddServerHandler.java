@@ -1,12 +1,13 @@
 package me.easylearnz.lb.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import me.easylearnz.lb.LoadBalancer;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+import me.easylearnz.lb.LoadBalancer;
 
 public class AddServerHandler implements HttpHandler {
     private LoadBalancer loadBalancer;
@@ -28,7 +29,7 @@ public class AddServerHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         } else {
-            exchange.sendResponseHeaders(405, -1);  // Method Not Allowed
+            exchange.sendResponseHeaders(405, -1); // Method Not Allowed
         }
         exchange.close();
     }
