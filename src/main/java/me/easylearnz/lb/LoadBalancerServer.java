@@ -9,7 +9,9 @@ import com.sun.net.httpserver.HttpServer;
 
 import me.easylearnz.lb.handlers.AddServerHandler;
 import me.easylearnz.lb.handlers.ChangeAlgorithmHandler;
+import me.easylearnz.lb.handlers.RemoveServerHandler;
 import me.easylearnz.lb.handlers.RequestHandler;
+import me.easylearnz.lb.handlers.StatusHandler;
 
 public class LoadBalancerServer {
     private final LoadBalancer loadBalancer;
@@ -22,9 +24,11 @@ public class LoadBalancerServer {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
             server.createContext("/", new RequestHandler(loadBalancer));
-            server.createContext("/addServer", new AddServerHandler(loadBalancer));
+            server.createContext("/add", new AddServerHandler(loadBalancer));
+            server.createContext("/remove", new RemoveServerHandler(loadBalancer));
             server.createContext("/changeAlgorithm", new ChangeAlgorithmHandler(loadBalancer));
-            server.setExecutor(Executors.newFixedThreadPool(10));
+            server.createContext("/status", new StatusHandler(loadBalancer));
+            // server.setExecutor(Executors.newFixedThreadPool(10));
             server.start();
             System.out.println("Load Balancer listening on port: " + port);
             initializeHealthCheck(loadBalancer);
@@ -36,6 +40,8 @@ public class LoadBalancerServer {
     private void initializeHealthCheck(LoadBalancer loadBalancer) {
         // Schedule health check every 10 seconds
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+
+        // checks if any healthy server is down
         executorService.scheduleAtFixedRate(() -> {
             try {
                 loadBalancer.healthCheck();
@@ -43,5 +49,14 @@ public class LoadBalancerServer {
                 e.printStackTrace();
             }
         }, 0, 10, TimeUnit.SECONDS);
+
+        // checks if any unhealthy server is up
+        executorService.scheduleAtFixedRate(() -> {
+            try {
+                loadBalancer.checkUnhealthyServers();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, 0, 1, TimeUnit.MINUTES);
     }
 }

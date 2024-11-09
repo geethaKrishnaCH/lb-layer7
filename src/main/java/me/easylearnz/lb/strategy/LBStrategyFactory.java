@@ -1,5 +1,6 @@
 package me.easylearnz.lb.strategy;
 
+import java.security.KeyStore.Entry;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,5 +18,15 @@ public class LBStrategyFactory {
 
     public static LBStrategy getStrategy() {
         return strategies.get("ROUND_ROBIN");
+    }
+
+    public static String getStrategyName(LBStrategy strategy) {
+
+        for (Map.Entry<String, LBStrategy> entry : strategies.entrySet()) {
+            if (entry.getValue().equals(strategy)) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }

@@ -11,10 +11,10 @@ import com.sun.net.httpserver.HttpHandler;
 
 import me.easylearnz.lb.LoadBalancer;
 
-public class AddServerHandler implements HttpHandler {
+public class RemoveServerHandler implements HttpHandler {
     private LoadBalancer loadBalancer;
 
-    public AddServerHandler(LoadBalancer loadBalancer) {
+    public RemoveServerHandler(LoadBalancer loadBalancer) {
         this.loadBalancer = loadBalancer;
     }
 
@@ -27,8 +27,8 @@ public class AddServerHandler implements HttpHandler {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(body);
                 String serverUrl = node.get("name").asText();
-                loadBalancer.addServer(serverUrl);
-                String response = "Server added: " + serverUrl;
+                loadBalancer.removeServer(serverUrl);
+                String response = "Server removed: " + serverUrl;
                 exchange.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream os = exchange.getResponseBody();
                 os.write(response.getBytes());

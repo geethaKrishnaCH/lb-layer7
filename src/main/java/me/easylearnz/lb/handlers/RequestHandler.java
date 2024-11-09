@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.CompletableFuture;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -20,44 +21,52 @@ public class RequestHandler implements HttpHandler {
     }
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(HttpExchange exchange) {
+        CompletableFuture.runAsync(() -> forwardRequest(exchange));
+    }
+
+    private void forwardRequest(HttpExchange exchange) {
         String backendServer = loadBalancer.getNextServer();
         try {
-            URL url = new URL(backendServer + httpExchange.getRequestURI().toString());
+            URL url = new URL(backendServer + exchange.getRequestURI().toString());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             // set the request method
-            connection.setRequestMethod(httpExchange.getRequestMethod());
+            connection.setRequestMethod(exchange.getRequestMethod());
 
             // set the headers
-            httpExchange.getRequestHeaders().forEach((key, values) -> {
+            exchange.getRequestHeaders().forEach((key, values) -> {
                 for (String value : values) {
                     connection.setRequestProperty(key, value);
                 }
             });
 
             // forward the request body
-            if (httpExchange.getRequestMethod().equals("PUT")
-                    || httpExchange.getRequestMethod().equals("POST")) {
+            if (exchange.getRequestMethod().equals("PUT")
+                    || exchange.getRequestMethod().equals("POST")) {
                 connection.setDoOutput(true);
                 try (OutputStream os = connection.getOutputStream()) {
-                    httpExchange.getRequestBody().transferTo(os);
+                    exchange.getRequestBody().transferTo(os);
                 }
             }
 
             // send back the response to the client
             int responseCode = connection.getResponseCode();
-            httpExchange.sendResponseHeaders(responseCode, connection.getContentLength());
+            exchange.sendResponseHeaders(responseCode, connection.getContentLength());
 
             try (InputStream is = connection.getInputStream()) {
-                is.transferTo(httpExchange.getResponseBody());
+                is.transferTo(exchange.getResponseBody());
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Failed to forward request to backend server: " + backendServer);
-            httpExchange.sendResponseHeaders(503, -1);
+            try {
+                exchange.sendResponseHeaders(503, -1);
+            } catch (IOException io) {
+                io.printStackTrace();
+            }
         } finally {
-            httpExchange.close();
+            exchange.close();
         }
     }
 }
