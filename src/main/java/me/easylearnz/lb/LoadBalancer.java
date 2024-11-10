@@ -32,6 +32,9 @@ public class LoadBalancer {
     }
 
     public String getNextServer() {
+        if (this.servers.size() == 0) {
+            return null;
+        }
         return strategy.selectServer(this.servers);
     }
 

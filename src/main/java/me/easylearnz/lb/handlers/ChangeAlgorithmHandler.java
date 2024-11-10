@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -19,8 +21,11 @@ public class ChangeAlgorithmHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if ("POST".equalsIgnoreCase(exchange.getRequestMethod())) {
-            String algorithm = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+        if ("PUT".equalsIgnoreCase(exchange.getRequestMethod())) {
+            String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(body);
+            String algorithm = node.get("algorithm").asText();
             loadBalancer.setStrategy(algorithm.trim());
             String response = "Algorithm changed to: " + algorithm;
             exchange.sendResponseHeaders(200, response.length());

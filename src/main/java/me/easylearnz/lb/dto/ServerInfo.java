@@ -1,4 +1,4 @@
-package me.easylearnz.lb.config;
+package me.easylearnz.lb.dto;
 
 public class ServerInfo {
   private String name;

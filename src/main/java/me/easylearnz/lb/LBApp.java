@@ -2,16 +2,11 @@ package me.easylearnz.lb;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import me.easylearnz.lb.config.ConfigLoader;
 import me.easylearnz.lb.config.Configuration;
-import me.easylearnz.lb.config.ServerInfo;
+import me.easylearnz.lb.dto.ServerInfo;
 
 public class LBApp {
-
-    private static final Logger LOGGER = LogManager.getLogger(LBApp.class);
 
     public static void main(String[] args) {
 

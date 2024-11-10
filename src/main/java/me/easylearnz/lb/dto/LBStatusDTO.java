@@ -1,4 +1,4 @@
-package me.easylearnz.lb.health.dto;
+package me.easylearnz.lb.dto;
 
 import java.util.List;
 

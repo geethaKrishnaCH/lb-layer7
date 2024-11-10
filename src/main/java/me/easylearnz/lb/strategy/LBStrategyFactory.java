@@ -8,16 +8,16 @@ public class LBStrategyFactory {
     private static final Map<String, LBStrategy> strategies = new HashMap<>();
 
     static {
-        strategies.put("ROUND_ROBIN", new RoundRobinStrategy());
-        strategies.put("RANDOM_SELECTION", new RandomSelectionStrategy());
+        strategies.put("round-robin", new RoundRobinStrategy());
+        strategies.put("random", new RandomSelectionStrategy());
     }
 
     public static LBStrategy getStrategy(String algorithm) {
-        return strategies.getOrDefault(algorithm, strategies.get("ROUND_ROBIN"));
+        return strategies.getOrDefault(algorithm, strategies.get("round-robin"));
     }
 
     public static LBStrategy getStrategy() {
-        return strategies.get("ROUND_ROBIN");
+        return strategies.get("round-robin");
     }
 
     public static String getStrategyName(LBStrategy strategy) {

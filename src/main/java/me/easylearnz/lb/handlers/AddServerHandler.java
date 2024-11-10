@@ -26,7 +26,7 @@ public class AddServerHandler implements HttpHandler {
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(body);
-                String serverUrl = node.get("name").asText();
+                String serverUrl = node.get("url").asText();
                 loadBalancer.addServer(serverUrl);
                 String response = "Server added: " + serverUrl;
                 exchange.sendResponseHeaders(200, response.getBytes().length);

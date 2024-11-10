@@ -9,7 +9,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import me.easylearnz.lb.LoadBalancer;
-import me.easylearnz.lb.health.dto.LBStatusDTO;
+import me.easylearnz.lb.dto.LBStatusDTO;
 import me.easylearnz.lb.strategy.LBStrategyFactory;
 
 public class StatusHandler implements HttpHandler {

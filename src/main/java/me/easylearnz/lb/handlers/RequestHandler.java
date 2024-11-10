@@ -52,7 +52,24 @@ public class RequestHandler implements HttpHandler {
 
             // send back the response to the client
             int responseCode = connection.getResponseCode();
-            exchange.sendResponseHeaders(responseCode, connection.getContentLength());
+
+            // Handle different response codes from the backend server
+            if (responseCode >= 500) {
+                // If it's a 5xx error, return a 502 Bad Gateway to the client
+                exchange.sendResponseHeaders(502, -1);
+            } else if (responseCode == 404) {
+                // If the resource is not found on the backend, return 404 Not Found
+                exchange.sendResponseHeaders(404, -1);
+            } else if (responseCode == 403) {
+                // Forbidden access, return 403 Forbidden to the client
+                exchange.sendResponseHeaders(403, -1);
+            } else if (responseCode == 401) {
+                // Unauthorized access, return 401 Unauthorized to the client
+                exchange.sendResponseHeaders(401, -1);
+            } else {
+                // For other response codes (200, 201, etc.), forward the response
+                exchange.sendResponseHeaders(responseCode, connection.getContentLength());
+            }
 
             try (InputStream is = connection.getInputStream()) {
                 is.transferTo(exchange.getResponseBody());

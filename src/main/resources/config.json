@@ -13,5 +13,5 @@
       "url": "http://localhost:8083"
     }
   ],
-  "algorithm": "RANDOM_SELECTION"
+  "algorithm": "random"
 }

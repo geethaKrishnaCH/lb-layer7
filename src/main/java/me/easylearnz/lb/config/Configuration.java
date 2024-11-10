@@ -2,6 +2,8 @@ package me.easylearnz.lb.config;
 
 import java.util.List;
 
+import me.easylearnz.lb.dto.ServerInfo;
+
 public class Configuration {
   private List<ServerInfo> servers;
   private String algorithm;

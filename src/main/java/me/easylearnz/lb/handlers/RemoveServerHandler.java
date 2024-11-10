@@ -20,13 +20,13 @@ public class RemoveServerHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if ("POST".equals(exchange.getRequestMethod())) {
+        if ("DELETE".equals(exchange.getRequestMethod())) {
             // Read the new server URL from the request body
             String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(body);
-                String serverUrl = node.get("name").asText();
+                String serverUrl = node.get("url").asText();
                 loadBalancer.removeServer(serverUrl);
                 String response = "Server removed: " + serverUrl;
                 exchange.sendResponseHeaders(200, response.getBytes().length);
