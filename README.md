@@ -2,6 +2,8 @@
 
 This project is a custom HTTP Load Balancer that distributes incoming client requests across multiple backend servers. It supports two load balancing algorithms, health checks, dynamic server management, and algorithm switching at runtime.
 
+![Load Balancer Diagram](src/main/resources/lb-hld.png)
+
 ## Features
 
 - **Load Balancing Algorithms**: Supports switching between different strategies (e.g., round-robin, random).
