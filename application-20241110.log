@@ -1,0 +1,9 @@
+2024-11-10 21:31:42.900 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8081
+2024-11-10 21:31:42.903 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8082
+2024-11-10 21:31:42.904 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8083
+2024-11-10 21:33:12.385 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8081
+2024-11-10 21:33:12.391 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8082
+2024-11-10 21:33:12.393 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8083
+2024-11-10 21:34:10.327 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8081
+2024-11-10 21:34:10.333 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8082
+2024-11-10 21:34:10.335 [pool-2-thread-1] INFO  me.easylearnz.lb.LoadBalancer - Server removed: http://localhost:8083

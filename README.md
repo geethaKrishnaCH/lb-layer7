@@ -64,7 +64,7 @@ Compile and Run the project using maven:
 
 ```bash
 mvn clean package
-java -jar target/*.jar
+java -jar .\target\layer7-lb-1.0-SNAPSHOT.jar
 ```
 
 ## API Endpoints
